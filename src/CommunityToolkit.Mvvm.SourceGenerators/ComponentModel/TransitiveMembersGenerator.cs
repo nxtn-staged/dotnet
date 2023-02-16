@@ -64,7 +64,7 @@ public abstract partial class TransitiveMembersGenerator<TInfo> : IIncrementalGe
             context.SyntaxProvider
             .ForAttributeWithMetadataName(
                 this.fullyQualifiedAttributeMetadataName,
-                static (node, _) => node is ClassDeclarationSyntax classDeclaration && classDeclaration.HasOrPotentiallyHasAttributes(),
+                static (node, _) => node.Kind() is SyntaxKind.ClassDeclaration or SyntaxKind.RecordDeclaration && ((TypeDeclarationSyntax)node).HasOrPotentiallyHasAttributes(),
                 (context, token) =>
                 {
                     if (!context.SemanticModel.Compilation.HasLanguageVersionAtLeastEqualTo(LanguageVersion.CSharp8))

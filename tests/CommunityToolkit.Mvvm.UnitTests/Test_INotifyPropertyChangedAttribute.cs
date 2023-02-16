@@ -18,7 +18,7 @@ public partial class Test_INotifyPropertyChangedAttribute
     [TestMethod]
     public void Test_INotifyPropertyChanged_Events()
     {
-        SampleModel? model = new();
+        SampleModel model = new();
 
         (PropertyChangedEventArgs, int) changed = default;
 
@@ -123,4 +123,14 @@ public partial class Test_INotifyPropertyChangedAttribute
         Assert.AreEqual(eventArgs[0].PropertyName, nameof(ExternalAssembly.SampleModelWithINPCAndObservableProperties.X));
         Assert.AreEqual(eventArgs[1].PropertyName, nameof(ExternalAssembly.SampleModelWithINPCAndObservableProperties.Y));
     }
+
+    [TestMethod]
+    public void Test_INotifyPropertyChanged_Record()
+    {
+        Assert.IsTrue(typeof(INotifyPropertyChanged).IsAssignableFrom(typeof(SampleModelRecord)));
+        Assert.IsFalse(typeof(INotifyPropertyChanging).IsAssignableFrom(typeof(SampleModelRecord)));
+    }
+
+    [INotifyPropertyChanged]
+    public partial record SampleModelRecord();
 }
